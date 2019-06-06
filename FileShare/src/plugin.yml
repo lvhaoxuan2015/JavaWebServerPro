@@ -1,0 +1,3 @@
+name: FileShare
+version: 1.0
+main: fileshare.FileShare

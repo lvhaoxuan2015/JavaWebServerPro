@@ -1,6 +1,5 @@
 package server;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Response {
@@ -9,14 +8,14 @@ public class Response {
     private String typeId;
     private String typeDescription;
     private List<String> head;
-    private List<byte[]> requestByte = new ArrayList<>();
+    private byte[] requestByte;
 
-    public Response(String httpVersion, String typeId, String typeDescription, List<String> Head, List<byte[]> RequestByte) {
+    public Response(String httpVersion, String typeId, String typeDescription, List<String> Head, byte[] requestByte) {
         this.httpVersion = httpVersion;
         this.typeId = typeId;
         this.typeDescription = typeDescription;
         this.head = Head;
-        this.requestByte = RequestByte;
+        this.requestByte = requestByte;
     }
 
     @Override
@@ -32,7 +31,7 @@ public class Response {
         this.head = Head;
     }
 
-    public void setRequestByte(List<byte[]> RequestByte) {
+    public void setRequestByte(byte[] RequestByte) {
         this.requestByte = RequestByte;
     }
 
@@ -64,7 +63,7 @@ public class Response {
         return head;
     }
 
-    public List<byte[]> getRequestByte() {
+    public byte[] getRequestByte() {
         return requestByte;
     }
 }

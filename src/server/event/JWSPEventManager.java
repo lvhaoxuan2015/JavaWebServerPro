@@ -16,13 +16,13 @@ public class JWSPEventManager {
     }
 
     public boolean callEvent(JWSPEvent callEvent) {
-        boolean ret = true;
+        boolean ret = false;
         if (JWSPEventMap.containsKey(callEvent.eventType)) {
             for (JWSPEvent event : JWSPEventMap.get(callEvent.eventType)) {
                 event.call(callEvent);
                 ret = event.isCancel;
             }
         }
-        return ret;
+        return !ret;
     }
 }

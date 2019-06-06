@@ -11,9 +11,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
@@ -23,7 +21,7 @@ import server.SelfLogger;
 public class PluginLoader {
 
     public File plugins;
-    public List<Object> pluginObjects = new ArrayList<>();
+    public HashMap<String, DefaultPlugin> pluginObjectMap = new HashMap<>();
 
     public PluginLoader(File plugins) {
         this.plugins = plugins;
@@ -34,7 +32,9 @@ public class PluginLoader {
 
     public void loadPlugins() {
         for (File plugin : plugins.listFiles()) {
-            loadPlugin(plugin);
+            if (!plugin.isDirectory()) {
+                loadPlugin(plugin);
+            }
         }
     }
 
@@ -57,8 +57,9 @@ public class PluginLoader {
         HashMap<String, String> info = getPluginInfo(plugin);
         SelfLogger.info("[" + info.get("name") + "] " + info.get("name") + " V" + info.get("version") + " is enabled");
         try {
-            Object javaPlugin = create(Class.forName(info.get("main")));
-            pluginObjects.add(javaPlugin);
+            DefaultPlugin javaPlugin = (DefaultPlugin) create(Class.forName(info.get("main")));
+            javaPlugin.name = info.get("name");
+            pluginObjectMap.put(info.get("name"), javaPlugin);
             doMethod(javaPlugin, "onEnable");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PluginLoader.class.getName()).log(Level.SEVERE, null, ex);

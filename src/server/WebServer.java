@@ -47,9 +47,9 @@ public class WebServer extends Thread {
             while (serverSocket.isBound()) {
                 try {
                     socket = serverSocket.accept();
-                    JWSPeventManager.callEvent(new SocketConnectEvent(socket));
-                    SelfLogger.info("ip " + socket.getInetAddress().getHostAddress() + " is connect");
-                    threadPool.execute(new SocketRunnable(socket, this));
+                    if (JWSPeventManager.callEvent(new SocketConnectEvent(socket))) {
+                        threadPool.execute(new SocketRunnable(socket, this));
+                    }
                 } catch (IOException ex) {
                     Logger.getLogger(WebServer.class.getName()).log(Level.SEVERE, null, ex);
                 }

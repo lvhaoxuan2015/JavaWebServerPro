@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Failed</title>
+        <script type="text/javascript">
+            var x = 3;
+            onload = function () {
+                document.getElementById("time").innerHTML = "Will jump to login page in " + x + " second";
+                setInterval(go, 1000);
+            };
+            function go() {
+                x--;
+                if (x > 0) {
+                    document.getElementById("time").innerHTML = "Will jump to login page in " + x + " second";
+                } else {
+                    window.history.go(-1);
+                }
+            }
+        </script>
+    </head>
+    <body>
+    <center>
+        <h1>Failed</h1>
+        <hr/>  
+        <div id="time"></div>
+    </center>
+</body>
+</html>
